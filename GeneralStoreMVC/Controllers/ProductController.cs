@@ -43,8 +43,7 @@ namespace GeneralStoreMVC.Controllers
 
         //GET : Delete
         //Product/Delete/{id}
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -57,6 +56,16 @@ namespace GeneralStoreMVC.Controllers
                 return HttpNotFound();
             }
             return View(product);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            Product product = _db.Products.Find(id);
+            _db.Products.Remove(product);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         //GET: Edit
